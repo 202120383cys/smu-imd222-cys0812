@@ -17,6 +17,8 @@ function setup() {
   }
   bird = new Bird(150, 300, 25);
 
+  // rect = new Rect(mouseX, mouseY, size, size);
+
   slingshot = new SlingShot(150, 300, bird.body);
 
   const mouse = Mouse.create(canvas.elt);
@@ -38,13 +40,13 @@ function keyPressed() {
 }
 
 function mousePressed() {
-  let size = random(70, 180);
-  let newRect;
   if (mouseButton === CENTER) {
-    newRect = new Rect(mouseX, mouseY, size, size, 255);
-    Composite.add(engine.world, newRect.bodies);
-    boxes.push(newRect);
+    newBox = new Box(mouseX, mouseY, 80, 70, 255);
   }
+  // fill(255);
+  stroke(0);
+  Matter.World.add(world, newBox.body);
+  boxes.push(newBox);
 }
 
 function mouseReleased() {
@@ -56,13 +58,12 @@ function mouseReleased() {
 }
 
 function draw() {
-  background(0);
+  background(55, 60, 80);
   Matter.Engine.update(engine);
   ground.show();
   for (let box of boxes) {
     box.show();
   }
-
   slingshot.show();
   bird.show();
 }
